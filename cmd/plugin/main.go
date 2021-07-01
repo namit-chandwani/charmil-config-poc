@@ -8,14 +8,12 @@ import (
 )
 
 func PluginCmd() (*cobra.Command, map[string]interface{}) {
-	config.New()
+	h := config.New()
 
-	config.SetValue("key5", "val5")
-	config.SetValue("key6", "val6")
-	config.SetValue("key7", "val7")
-	config.SetValue("key8", "val8")
-
-	fmt.Println("Plugin config map: ", config.GetAllSettings())
+	h.SetValue("key5", "val5")
+	h.SetValue("key6", "val6")
+	h.SetValue("key7", "val7")
+	h.SetValue("key8", "val8")
 
 	cmd := &cobra.Command{
 		Use:   "plugin",
@@ -25,5 +23,5 @@ func PluginCmd() (*cobra.Command, map[string]interface{}) {
 		},
 	}
 
-	return cmd, config.GetAllSettings()
+	return cmd, h.GetAllSettings()
 }

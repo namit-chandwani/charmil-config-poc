@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/namit-chandwani/charmil-config-poc/cmd/plugin"
@@ -28,30 +27,24 @@ func init() {
 }
 
 func main() {
-	config.New()
-	config.InitFile(f)
+	h := config.New()
+	h.InitFile(f)
 
-	err := config.Load()
+	err := h.Load()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	config.SetValue("key4", "val4")
-
-	fmt.Println("Host config map: ", config.GetAllSettings())
+	h.SetValue("key4", "val4")
 
 	pluginCmd, pluginCfg := plugin.PluginCmd()
 	rootCmd.AddCommand(pluginCmd)
 
-	config.SetPluginCfg("pluginA", pluginCfg)
+	h.SetPluginCfg("pluginA", pluginCfg)
 
-	fmt.Println("Host config map: ", config.GetAllSettings())
+	h.MergePluginCfg()
 
-	config.MergePluginCfg()
-
-	fmt.Println("Host config map: ", config.GetAllSettings())
-
-	err = config.Save()
+	err = h.Save()
 	if err != nil {
 		log.Fatal(err)
 	}
